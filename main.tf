@@ -34,30 +34,33 @@ resource "yandex_lb_network_load_balancer" "main" {
     }
   }
 
-  attached_target_group {
-    target_group_id = yandex_lb_target_group.main.id
+  dynamic "attached_target_group" {
+    for_each = var.create_target_group ? concat(var.target_group_ids, yandex_lb_target_group.main[0].id) : var.target_group_ids
+    content {
+      target_group_id = attached_target_group.value
 
-    dynamic "healthcheck" {
-      for_each = var.health_check.enabled ? [1] : [0]
-      content {
-        name                = var.health_check.name
-        interval            = var.health_check.interval
-        timeout             = var.health_check.timeout
-        unhealthy_threshold = var.health_check.unhealthy_threshold
-        healthy_threshold   = var.health_check.healthy_threshold
+      dynamic "healthcheck" {
+        for_each = var.health_check.enabled ? [1] : []
+        content {
+          name                = var.health_check.name
+          interval            = var.health_check.interval
+          timeout             = var.health_check.timeout
+          unhealthy_threshold = var.health_check.unhealthy_threshold
+          healthy_threshold   = var.health_check.healthy_threshold
 
-        dynamic "http_options" {
-          for_each = lookup(var.health_check, "http_options", null) != null ? [1] : []
-          content {
-            port = var.health_check.http_options.port
-            path = var.health_check.http_options.path
+          dynamic "http_options" {
+            for_each = lookup(var.health_check, "http_options") != null ? [1] : []
+            content {
+              port = var.health_check.http_options.port
+              path = var.health_check.http_options.path
+            }
           }
-        }
 
-        dynamic "tcp_options" {
-          for_each = lookup(var.health_check, "tcp_options", null) != null ? [1] : []
-          content {
-            port = var.health_check.tcp_options.port
+          dynamic "tcp_options" {
+            for_each = lookup(var.health_check, "tcp_options") != null ? [1] : []
+            content {
+              port = var.health_check.tcp_options.port
+            }
           }
         }
       }
@@ -66,6 +69,8 @@ resource "yandex_lb_network_load_balancer" "main" {
 }
 
 resource "yandex_lb_target_group" "main" {
+  count = var.create_target_group ? 1 : 0
+
   name        = var.name
   description = var.description
   folder_id   = var.folder_id

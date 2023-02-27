@@ -72,6 +72,18 @@ variable "listeners" {
   default = []
 }
 
+variable "target_group_ids" {
+  description = "IDs of target groups that will be attached to Network Load Balancer"
+  type        = list(string)
+  default     = []
+}
+
+variable "create_target_group" {
+  description = "If true, target group will be created"
+  type        = bool
+  default     = false
+}
+
 variable "targets" {
   description = "Network load balancer targets"
   type = list(object({
