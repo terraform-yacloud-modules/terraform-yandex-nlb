@@ -27,6 +27,7 @@ resource "yandex_lb_network_load_balancer" "main" {
         for_each = !listener.value["is_public"] ? [1] : []
         content {
           subnet_id  = var.subnet_id
+          ip_version = listener.value["ip_version"]
         }
       }
     }
