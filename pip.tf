@@ -1,14 +1,12 @@
 resource "yandex_vpc_address" "pip" {
-  for_each = {
-    for listener in var.listeners : listener["name"] => listener if listener["external_address_spec"]["allocate_pip"]
-  }
+  count = var.create_pip ? 1 : 0
 
-  name = format("%s-nlb-%s", var.name, each.key)
+  name        = format("%s-alb", var.name)
   description = ""
   folder_id   = var.folder_id
   labels      = var.labels
 
   external_ipv4_address {
-    zone_id = each.value["external_address_spec"]["pip_zone_id"]
+    zone_id = var.pip_zone_id
   }
 }
