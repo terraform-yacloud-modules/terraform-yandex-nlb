@@ -34,7 +34,7 @@ resource "yandex_lb_network_load_balancer" "main" {
   }
 
   dynamic "attached_target_group" {
-    for_each = var.create_target_group ? concat(var.target_group_ids, yandex_lb_target_group.main[0].id) : var.target_group_ids
+    for_each = var.create_target_group ? concat(var.target_group_ids, [yandex_lb_target_group.main[0].id]) : var.target_group_ids
     content {
       target_group_id = attached_target_group.value
 
