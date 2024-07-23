@@ -48,9 +48,7 @@ resource "yandex_lb_network_load_balancer" "main" {
           healthy_threshold   = var.health_check.healthy_threshold
 
           dynamic "http_options" {
-            for_each = lookup(var.health_check, "http_options") != null ? [
-              1
-            ] : []
+            for_each = var.health_check.http_options != null ? [1] : []
             content {
               port = var.health_check.http_options.port
               path = var.health_check.http_options.path
@@ -58,9 +56,7 @@ resource "yandex_lb_network_load_balancer" "main" {
           }
 
           dynamic "tcp_options" {
-            for_each = lookup(var.health_check, "tcp_options") != null ? [
-              1
-            ] : []
+            for_each = var.health_check.tcp_options != null ? [1] : []
             content {
               port = var.health_check.tcp_options.port
             }
