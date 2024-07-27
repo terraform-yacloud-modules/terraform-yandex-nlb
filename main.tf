@@ -1,7 +1,6 @@
 resource "yandex_lb_network_load_balancer" "main" {
   name        = var.name
   description = var.description
-  folder_id   = var.folder_id
   labels      = var.labels
 
   region_id = var.region_id
@@ -72,7 +71,6 @@ resource "yandex_lb_target_group" "main" {
 
   name        = var.name
   description = var.description
-  folder_id   = var.folder_id
   labels      = var.labels
 
   region_id = var.region_id

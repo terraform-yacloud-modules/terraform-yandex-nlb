@@ -1,7 +1,6 @@
 module "network_load_balancer" {
   source = "../../"
 
-  folder_id = "xxxx"
   region_id = "ru-central1"
   name = "example-nlb"
   description = "Network Load Balancer"
