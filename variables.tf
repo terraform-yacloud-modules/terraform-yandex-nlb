@@ -59,7 +59,7 @@ variable "type" {
 
 variable "listeners" {
   description = "Network load balancer listeners"
-  type        = list(object({
+  type = list(object({
     name        = optional(string)
     port        = optional(number)
     target_port = optional(number)
@@ -84,7 +84,7 @@ variable "create_target_group" {
 
 variable "targets" {
   description = "Network load balancer targets"
-  type        = list(object({
+  type = list(object({
     address   = string
     subnet_id = string
   }))
@@ -93,14 +93,14 @@ variable "targets" {
 
 variable "health_check" {
   description = "Target group health check"
-  type        = object({
+  type = object({
     enabled             = optional(bool, false)
     name                = string
     interval            = optional(number, 2)
     timeout             = optional(number, 1)
     unhealthy_threshold = optional(number, 2)
     healthy_threshold   = optional(number, 3)
-    http_options        = optional(object({
+    http_options = optional(object({
       port = optional(number)
       path = optional(string, "/")
     }), null)

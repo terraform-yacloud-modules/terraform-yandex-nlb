@@ -6,12 +6,11 @@ module "network_load_balancer" {
   description = "Network Load Balancer" # Описание
   labels      = { env = "dev" }         # Метки
 
-  subnet_id   = "xxxx"                  # ID подсети
+  subnet_id = "xxxx" # ID подсети
 
-  create_pip  = false                   # Создавать ли публичный IP
+  create_pip = false # Создавать ли публичный IP
 
-  type = "internal"                     # Тип балансировщика (internal или external)
+  type = "internal" # Тип балансировщика (internal или external)
 
   create_target_group = false
 }
-
