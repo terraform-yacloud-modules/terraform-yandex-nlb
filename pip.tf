@@ -3,7 +3,6 @@ resource "yandex_vpc_address" "pip" {
 
   name        = format("%s-alb", var.name)
   description = ""
-  folder_id   = var.folder_id
   labels      = var.labels
 
   external_ipv4_address {

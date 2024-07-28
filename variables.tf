@@ -1,12 +1,6 @@
 #
 # yandex cloud coordinates
 #
-variable "folder_id" {
-  description = "Folder ID"
-  type        = string
-  default     = null
-}
-
 variable "region_id" {
   description = "ID of the availability zone where the network load balancer resides"
   type        = string
