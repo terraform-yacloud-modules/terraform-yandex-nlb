@@ -104,6 +104,17 @@ module "network_load_balancer" {
   create_target_group = false
   target_group_ids    = [module.yandex_compute_instance.target_group_id]
 
+  listeners = [
+    {
+      name        = "listener1"
+      port        = 80
+      target_port = 80
+      protocol    = "tcp"
+      is_public   = true
+      ip_version  = "ipv4"
+    }
+  ]
+
   health_check = {
     enabled = true
     name    = "http"
