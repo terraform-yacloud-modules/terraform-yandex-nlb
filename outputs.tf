@@ -17,3 +17,8 @@ output "tg_name" {
   description = "Target group name"
   value       = var.create_target_group ? yandex_lb_target_group.main[0].name : null
 }
+
+output "external_ip" {
+  description = "External IP address of the Network Load Balancer"
+  value       = var.create_pip ? yandex_vpc_address.pip[0].external_ipv4_address[0].address : null
+}

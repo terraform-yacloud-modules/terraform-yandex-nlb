@@ -19,3 +19,8 @@ output "target_group_id" {
   description = "Target group ID"
   value       = module.yandex_compute_instance.target_group_id
 }
+
+output "nlb_external_ip" {
+  description = "External IP address of the Network Load Balancer"
+  value       = module.network_load_balancer.external_ip
+}

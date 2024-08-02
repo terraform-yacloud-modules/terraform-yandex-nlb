@@ -58,6 +58,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_external_ip"></a> [external\_ip](#output\_external\_ip) | External IP address of the Network Load Balancer |
 | <a name="output_id"></a> [id](#output\_id) | Network Load Balancer ID |
 | <a name="output_name"></a> [name](#output\_name) | Network Load Balancer name |
 | <a name="output_tg_id"></a> [tg\_id](#output\_tg\_id) | Target group ID |
