@@ -17,7 +17,7 @@ resource "yandex_lb_network_load_balancer" "main" {
       dynamic "external_address_spec" {
         for_each = listener.value["is_public"] ? [1] : []
         content {
-          address    = yandex_vpc_address.pip[0].external_ipv4_address[0].address
+          address    = var.pip != null ? var.pip : yandex_vpc_address.pip[0].external_ipv4_address[0].address
           ip_version = listener.value["ip_version"]
         }
       }

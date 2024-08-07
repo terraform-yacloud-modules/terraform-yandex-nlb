@@ -112,3 +112,9 @@ variable "health_check" {
     name = "app"
   }
 }
+
+variable "pip" {
+  description = "Public IP address for the network load balancer"
+  type        = string
+  default     = null
+}
