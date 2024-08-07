@@ -47,6 +47,7 @@ No modules.
 | <a name="input_labels"></a> [labels](#input\_labels) | A set of labels | `map(string)` | `{}` | no |
 | <a name="input_listeners"></a> [listeners](#input\_listeners) | Network load balancer listeners | <pre>list(object({<br>    name        = optional(string)<br>    port        = optional(number)<br>    target_port = optional(number)<br>    protocol    = optional(string, "tcp")<br>    is_public   = optional(bool, false)<br>    ip_version  = optional(string, "ipv4")<br>  }))</pre> | `[]` | no |
 | <a name="input_name"></a> [name](#input\_name) | Network load balancer name | `string` | n/a | yes |
+| <a name="input_pip"></a> [pip](#input\_pip) | Public IP address for the network load balancer | `string` | `null` | no |
 | <a name="input_pip_zone_id"></a> [pip\_zone\_id](#input\_pip\_zone\_id) | Public IP zone | `string` | `"ru-central1-a"` | no |
 | <a name="input_region_id"></a> [region\_id](#input\_region\_id) | ID of the availability zone where the network load balancer resides | `string` | `null` | no |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | Private subnet where IP for NLB listener will be allocated | `string` | `null` | no |
