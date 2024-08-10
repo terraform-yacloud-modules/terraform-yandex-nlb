@@ -132,3 +132,25 @@ module "network_load_balancer" {
     }
   }
 }
+
+module "dns_zone" {
+
+  source = "git::https://github.com/terraform-yacloud-modules/terraform-yandex-dns.git//modules/zone?ref=v1.0.0"
+
+  name        = "my-private-zone"
+  description = "desc"
+
+  zone             = "dns-zone.org.ru."
+  is_public        = true
+  private_networks = [module.network.vpc_id]
+}
+
+module "dns_recordset" {
+  source = "git::https://github.com/terraform-yacloud-modules/terraform-yandex-dns.git//modules/recordset?ref=v1.0.0"
+
+  zone_id = module.dns_zone.id
+  name    = "test.dns-zone.org.ru."
+  type    = "A"
+  ttl     = 200
+  data    = [module.address.external_ipv4_address]
+}
