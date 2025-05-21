@@ -1,5 +1,3 @@
-# Example Network Load Balancer with external-ip and instance-group
-
 ## Usage
 
 To run this example you need to execute:
