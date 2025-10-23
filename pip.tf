@@ -5,6 +5,9 @@ resource "yandex_vpc_address" "pip" {
   description = ""
   labels      = var.labels
 
+  folder_id           = local.folder_id
+  deletion_protection = var.pip_deletion_protection
+
   external_ipv4_address {
     zone_id = var.pip_zone_id
   }
