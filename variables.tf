@@ -1,6 +1,12 @@
 #
 # yandex cloud coordinates
 #
+variable "folder_id" {
+  description = "ID of the folder where the resources will be created"
+  type        = string
+  default     = null
+}
+
 variable "region_id" {
   description = "ID of the availability zone where the network load balancer resides"
   type        = string
@@ -55,6 +61,18 @@ variable "type" {
   description = "Network load balancer type; Can be internal or external"
   type        = string
   default     = "internal"
+}
+
+variable "deletion_protection" {
+  description = "Protection against accidental deletion of the network load balancer"
+  type        = bool
+  default     = false
+}
+
+variable "allow_zonal_shift" {
+  description = "Allow zonal shift for the network load balancer"
+  type        = bool
+  default     = false
 }
 
 variable "listeners" {
@@ -117,4 +135,20 @@ variable "pip" {
   description = "Public IP address for the network load balancer"
   type        = string
   default     = null
+}
+
+variable "timeouts" {
+  description = "Timeout configuration for resource operations"
+  type = object({
+    create = optional(string, "10m")
+    update = optional(string, "10m")
+    delete = optional(string, "15m")
+  })
+  default = {}
+}
+
+variable "pip_deletion_protection" {
+  description = "Protection against accidental deletion of the public IP address"
+  type        = bool
+  default     = false
 }

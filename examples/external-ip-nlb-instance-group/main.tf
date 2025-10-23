@@ -33,7 +33,7 @@ module "network" {
 }
 
 module "address" {
-  source = "git::https://github.com/terraform-yacloud-modules/terraform-yandex-address.git"
+  source = "git::https://github.com/terraform-yacloud-modules/terraform-yandex-address.git?ref=v2.1.0"
 
   name    = "nlb-pip"
   zone_id = "ru-central1-a"

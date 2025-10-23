@@ -3,8 +3,20 @@ resource "yandex_lb_network_load_balancer" "main" {
   description = var.description
   labels      = var.labels
 
-  region_id = var.region_id
-  type      = var.type
+  folder_id           = local.folder_id
+  region_id           = var.region_id
+  type                = var.type
+  deletion_protection = var.deletion_protection
+  allow_zonal_shift   = var.allow_zonal_shift
+
+  dynamic "timeouts" {
+    for_each = length(var.timeouts) > 0 ? [var.timeouts] : []
+    content {
+      create = timeouts.value.create
+      update = timeouts.value.update
+      delete = timeouts.value.delete
+    }
+  }
 
   dynamic "listener" {
     for_each = var.listeners
@@ -73,7 +85,17 @@ resource "yandex_lb_target_group" "main" {
   description = var.description
   labels      = var.labels
 
+  folder_id = local.folder_id
   region_id = var.region_id
+
+  dynamic "timeouts" {
+    for_each = length(var.timeouts) > 0 ? [var.timeouts] : []
+    content {
+      create = timeouts.value.create
+      update = timeouts.value.update
+      delete = timeouts.value.delete
+    }
+  }
 
   dynamic "target" {
     for_each = var.targets
@@ -82,4 +104,5 @@ resource "yandex_lb_target_group" "main" {
       address   = target.value["address"]
     }
   }
+
 }
