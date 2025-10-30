@@ -61,6 +61,11 @@ variable "type" {
   description = "Network load balancer type; Can be internal or external"
   type        = string
   default     = "internal"
+
+  validation {
+    condition     = contains(["internal", "external"], var.type)
+    error_message = "Type must be either 'internal' or 'external'."
+  }
 }
 
 variable "deletion_protection" {
@@ -86,6 +91,34 @@ variable "listeners" {
     ip_version  = optional(string, "ipv4")
   }))
   default = []
+
+  validation {
+    condition = alltrue([
+      for listener in var.listeners : contains(["tcp", "udp"], listener.protocol)
+    ])
+    error_message = "Listener protocol must be either 'tcp' or 'udp'."
+  }
+
+  validation {
+    condition = alltrue([
+      for listener in var.listeners : contains(["ipv4", "ipv6"], listener.ip_version)
+    ])
+    error_message = "IP version must be either 'ipv4' or 'ipv6'."
+  }
+
+  validation {
+    condition = alltrue([
+      for listener in var.listeners : listener.port == null || (listener.port >= 1 && listener.port <= 65535)
+    ])
+    error_message = "Listener port must be in the range of 1 to 65535."
+  }
+
+  validation {
+    condition = alltrue([
+      for listener in var.listeners : listener.target_port == null || (listener.target_port >= 0 && listener.target_port <= 65535)
+    ])
+    error_message = "Target port must be in the range of 0 to 65535."
+  }
 }
 
 variable "target_group_ids" {
@@ -128,6 +161,26 @@ variable "health_check" {
   })
   default = {
     name = "app"
+  }
+
+  validation {
+    condition     = var.health_check.interval == null || (var.health_check.interval >= 2 && var.health_check.interval <= 300)
+    error_message = "Health check interval must be in the range of 2s to 5m (300s)."
+  }
+
+  validation {
+    condition     = var.health_check.timeout == null || (var.health_check.timeout >= 1 && var.health_check.timeout <= 60)
+    error_message = "Health check timeout must be in the range of 1s to 1m (60s)."
+  }
+
+  validation {
+    condition     = var.health_check.http_options == null || var.health_check.http_options.port == null || (var.health_check.http_options.port >= 1 && var.health_check.http_options.port <= 65535)
+    error_message = "HTTP health check port must be in the range of 1 to 65535."
+  }
+
+  validation {
+    condition     = var.health_check.tcp_options == null || var.health_check.tcp_options.port == null || (var.health_check.tcp_options.port >= 1 && var.health_check.tcp_options.port <= 65535)
+    error_message = "TCP health check port must be in the range of 1 to 65535."
   }
 }
 
