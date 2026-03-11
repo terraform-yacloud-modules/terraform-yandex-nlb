@@ -1,3 +1,7 @@
+## v1.39.0 - 2026-03-11
+### Miscellaneous
+- f2637a7 build(deps): bump hashicorp/setup-terraform from 3 to 4 ([#99](https://github.com/terraform-yacloud-modules/terraform-yandex-nlb/pull/99))
+
 ## v1.38.0 - 2026-03-02
 ### Miscellaneous
 - 31bd254 Merge pull request [#98](https://github.com/terraform-yacloud-modules/terraform-yandex-nlb/pull/98) from terraform-yacloud-modules/dependabot/github_actions/kvendingoldo/git-flow-action-2.16.0
