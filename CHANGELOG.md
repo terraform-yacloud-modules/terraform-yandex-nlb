@@ -1,3 +1,7 @@
+## v1.42.0 - 2026-11-07
+### Miscellaneous
+- 018e561 build(deps): bump actions/cache from 5.0.5 to 6.1.0 ([#104](https://github.com/terraform-yacloud-modules/terraform-yandex-nlb/pull/104))
+
 ## v1.41.0 - 2026-09-01
 ### Bug Fixes
 - d536850 fix: передача folder_id в примере с приоритетом tfvars над YC_FOLDER_ID
