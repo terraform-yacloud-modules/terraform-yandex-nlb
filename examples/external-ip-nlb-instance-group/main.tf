@@ -84,7 +84,8 @@ module "yandex_compute_instance" {
   hostname           = "my-instance"
   service_account_id = module.iam_accounts.id
   ssh_user           = "ubuntu"
-  generate_ssh_key   = true
+  generate_ssh_key   = false
+  ssh_pubkey         = pathexpand("~/.ssh/id_ed25519.pub")
 
   user_data = <<-EOF
         #cloud-config
