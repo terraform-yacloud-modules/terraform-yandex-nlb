@@ -1,3 +1,7 @@
+## v1.43.0 - 2026-11-08
+### Miscellaneous
+- 116c00d build(deps): bump actions/checkout from 6 to 7 ([#103](https://github.com/terraform-yacloud-modules/terraform-yandex-nlb/pull/103))
+
 ## v1.42.0 - 2026-11-07
 ### Miscellaneous
 - 018e561 build(deps): bump actions/cache from 5.0.5 to 6.1.0 ([#104](https://github.com/terraform-yacloud-modules/terraform-yandex-nlb/pull/104))
