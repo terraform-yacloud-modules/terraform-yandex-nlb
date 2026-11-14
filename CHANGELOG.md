@@ -1,3 +1,7 @@
+## v1.44.0 - 2026-11-14
+### Miscellaneous
+- 9c3b67b Fix health_check null validation and example SSH key setup ([#105](https://github.com/terraform-yacloud-modules/terraform-yandex-nlb/pull/105))
+
 ## v1.43.0 - 2026-11-08
 ### Miscellaneous
 - 116c00d build(deps): bump actions/checkout from 6 to 7 ([#103](https://github.com/terraform-yacloud-modules/terraform-yandex-nlb/pull/103))
