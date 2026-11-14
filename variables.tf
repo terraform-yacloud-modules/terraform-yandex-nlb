@@ -174,12 +174,12 @@ variable "health_check" {
   }
 
   validation {
-    condition     = var.health_check.http_options == null || var.health_check.http_options.port == null || (var.health_check.http_options.port >= 1 && var.health_check.http_options.port <= 65535)
+    condition     = var.health_check.http_options == null || try(var.health_check.http_options.port == null || (var.health_check.http_options.port >= 1 && var.health_check.http_options.port <= 65535), true)
     error_message = "HTTP health check port must be in the range of 1 to 65535."
   }
 
   validation {
-    condition     = var.health_check.tcp_options == null || var.health_check.tcp_options.port == null || (var.health_check.tcp_options.port >= 1 && var.health_check.tcp_options.port <= 65535)
+    condition     = var.health_check.tcp_options == null || try(var.health_check.tcp_options.port == null || (var.health_check.tcp_options.port >= 1 && var.health_check.tcp_options.port <= 65535), true)
     error_message = "TCP health check port must be in the range of 1 to 65535."
   }
 }
