@@ -1,3 +1,7 @@
+## v1.45.0 - 2026-11-18
+### Miscellaneous
+- 9b16402 ci: run semver job only on push to main ([#106](https://github.com/terraform-yacloud-modules/terraform-yandex-nlb/pull/106))
+
 ## v1.44.0 - 2026-11-14
 ### Miscellaneous
 - 9c3b67b Fix health_check null validation and example SSH key setup ([#105](https://github.com/terraform-yacloud-modules/terraform-yandex-nlb/pull/105))
