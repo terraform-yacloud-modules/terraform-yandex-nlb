@@ -22,3 +22,13 @@ output "external_ip" {
   description = "External IP address of the Network Load Balancer"
   value       = var.create_pip ? yandex_vpc_address.pip[0].external_ipv4_address[0].address : null
 }
+
+output "listener_addresses" {
+  description = "IP addresses assigned to the Network Load Balancer listeners"
+  value = {
+    for listener in yandex_lb_network_load_balancer.main.listener : listener.name => {
+      external = try(one(listener.external_address_spec).address, null)
+      internal = try(one(listener.internal_address_spec).address, null)
+    }
+  }
+}
