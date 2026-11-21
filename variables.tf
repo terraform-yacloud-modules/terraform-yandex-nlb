@@ -83,12 +83,14 @@ variable "allow_zonal_shift" {
 variable "listeners" {
   description = "Network load balancer listeners"
   type = list(object({
-    name        = optional(string)
-    port        = optional(number)
-    target_port = optional(number)
-    protocol    = optional(string, "tcp")
-    is_public   = optional(bool, false)
-    ip_version  = optional(string, "ipv4")
+    name             = optional(string)
+    port             = optional(number)
+    target_port      = optional(number)
+    protocol         = optional(string, "tcp")
+    is_public        = optional(bool, false)
+    ip_version       = optional(string, "ipv4")
+    external_address = optional(string)
+    internal_address = optional(string)
   }))
   default = []
 
@@ -97,6 +99,27 @@ variable "listeners" {
       for listener in var.listeners : contains(["tcp", "udp"], listener.protocol)
     ])
     error_message = "Listener protocol must be either 'tcp' or 'udp'."
+  }
+
+  validation {
+    condition = alltrue([
+      for listener in var.listeners : var.type == "external" ? listener.is_public : !listener.is_public
+    ])
+    error_message = "External load balancer supports only public listeners, internal load balancer supports only private listeners."
+  }
+
+  validation {
+    condition = alltrue([
+      for listener in var.listeners : listener.is_public || var.subnet_id != null
+    ])
+    error_message = "subnet_id must be set when the load balancer has private (internal) listeners."
+  }
+
+  validation {
+    condition = var.create_pip || var.pip != null || alltrue([
+      for listener in var.listeners : !listener.is_public || listener.external_address != null
+    ])
+    error_message = "A source of the external IP address is required for public listeners: set create_pip = true, pip, or listener.external_address."
   }
 
   validation {
@@ -131,6 +154,24 @@ variable "create_target_group" {
   description = "If true, target group will be created"
   type        = bool
   default     = false
+}
+
+variable "target_group_name" {
+  description = "Target group name. Defaults to the network load balancer name"
+  type        = string
+  default     = null
+}
+
+variable "target_group_description" {
+  description = "Target group description. Defaults to the network load balancer description"
+  type        = string
+  default     = null
+}
+
+variable "target_group_labels" {
+  description = "A set of labels for the target group. Defaults to the network load balancer labels"
+  type        = map(string)
+  default     = null
 }
 
 variable "targets" {

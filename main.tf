@@ -29,7 +29,11 @@ resource "yandex_lb_network_load_balancer" "main" {
       dynamic "external_address_spec" {
         for_each = listener.value["is_public"] ? [1] : []
         content {
-          address    = var.pip != null ? var.pip : yandex_vpc_address.pip[0].external_ipv4_address[0].address
+          address = (
+            listener.value["external_address"] != null
+            ? listener.value["external_address"]
+            : (var.pip != null ? var.pip : yandex_vpc_address.pip[0].external_ipv4_address[0].address)
+          )
           ip_version = listener.value["ip_version"]
         }
       }
@@ -38,6 +42,7 @@ resource "yandex_lb_network_load_balancer" "main" {
         for_each = !listener.value["is_public"] ? [1] : []
         content {
           subnet_id  = var.subnet_id
+          address    = listener.value["internal_address"]
           ip_version = listener.value["ip_version"]
         }
       }
@@ -81,9 +86,9 @@ resource "yandex_lb_network_load_balancer" "main" {
 resource "yandex_lb_target_group" "main" {
   count = var.create_target_group ? 1 : 0
 
-  name        = var.name
-  description = var.description
-  labels      = var.labels
+  name        = coalesce(var.target_group_name, var.name)
+  description = coalesce(var.target_group_description, var.description)
+  labels      = var.target_group_labels != null ? var.target_group_labels : var.labels
 
   folder_id = local.folder_id
   region_id = var.region_id
